@@ -1,0 +1,18 @@
+# Set the default editor
+export VISUAL=vim
+export EDITOR=vim
+
+
+# Defining foreground variables
+P_BLACK="\[$(tput setaf 0)\]"
+P_RED="\[$(tput setaf 1)\]"
+P_GREEN="\[$(tput setaf 2)\]"
+P_YELLOW="\[$(tput setaf 3)\]"
+P_BLUE="\[$(tput setaf 4)\]"
+P_MAGENTA="\[$(tput setaf 5)\]"
+P_CYAN="\[$(tput setaf 6)\]"
+P_WHITE="\[$(tput setaf 7)\]"
+P_RESET="\[$(tput sgr0)\]"
+P_BOLD="\[$(tput bold)\]"
+
+export PS1="$P_BOLD$P_RED\u$P_RED\$$P_RESET$P_BLUE:\w$P_CYAN\\$ $P_RESET"
