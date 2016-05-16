@@ -1,0 +1,111 @@
+# Slackware Conky Google Now Dark style #
+
+# Conky settings #
+background no
+update_interval 2
+update_interval_on_battery 5
+double_buffer yes
+no_buffers yes
+
+# Window specifications #
+own_window yes
+own_window_class Conky
+own_window_type normal
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_transparent no
+own_window_argb_visual yes
+own_window_argb_value 175
+
+#minimum_size 230
+maximum_width 230
+
+# Alignment #
+alignment top_left
+gap_x 1666
+gap_y 40
+border_inner_margin 15
+border_outer_margin 0
+
+# Graphics settings #
+draw_shades no
+draw_outline no
+draw_borders no
+draw_graph_borders no
+
+# Text settings #
+use_xft yes
+xftalpha 0
+xftfont Open Sans Light:size=10
+
+override_utf8_locale yes
+
+imlib_cache_size 0
+
+# Color scheme - Tango Palette #
+default_color BABDB6 # aluminium
+
+color1 C4A000 # butter
+color2 CE5C00 # orange
+color3 8F5902 # chocolate
+color4 81E234 # chamemelon
+color5 729FCF # skyblue
+color6 AD7FA8 # Plum
+color7 CC0000 # scarlet red
+color8 D3D7CF # aluminium
+color9 A23436 # oil
+
+TEXT
+# current desktop
+${goto 55}${font Open Sans Light:size=50}${if_match ${desktop}==1}${color6}${endif}• ${color}${if_match ${desktop}==2}${color6}${endif}• ${color}${if_match ${desktop}==3}${color6}${endif}• ${color}${if_match ${desktop}==4}${color6}${endif}•${color}${font}${voffset -15}
+
+# system date
+${goto 35}${font Cinnamon Cake:size=20}${color6}${time %a %d %b %Y}${color}${font}${voffset 10}
+# gnu/linux distro
+${font Jellyka CuttyCupcakes:size=35}${color5}${exec grep "^ID=" /etc/os-release | sed -e "s/^ID=\(.*\)$/\1/g" | sed -r "s/\b(.)/\U\1/g"} ${sysname} ${exec grep "^VERSION_ID=" /etc/os-release | sed -e "s/^VERSION_ID=\(.*\)$/\1/g"}${color}${font}
+# kernel version & arch
+${font Cinnamon Cake:size=14}
+${alignc} ${color5}v. ${kernel}${color} on ${color5}${machine} bits${color} ${font}
+#system info
+
+${alignc}${font Jellyka CuttyCupcakes:size=30}System${font} 
+${font Cinnamon Cake:size=13}
+User: ${color5}${uid_name 1000}${color}
+Uptime: ${color5}${uptime_short}${color}
+RAM: ${tab}${color5}${memperc}%${color} - ${color5}${voffset 2}${membar 6}${color}
+${tab}${tab} In use: ${color5}${mem}${color}
+${tab}${tab} Free: ${color5}${memfree}${color}
+${tab}${tab} Total: ${color5}${memmax}${color}
+Swap: ${color5}${swap}${color} / ${color5}${swapmax}${color} - ${color5}${swapperc}% ${voffset 2}${swapbar 6}${color}
+Battery: ${color5}${battery_percent}% ${battery_bar 6} ${color}
+(Dis)Charging Time: ${color5}${battery_time}${color}
+AC Adapter: ${color5}${acpiacadapter}${color}
+Processes: ${color5}${processes}${color} - Running: ${color5}${running_processes}${color}${font}
+
+${alignc}${font Jellyka CuttyCupcakes:size=30}CPU${font}
+${font Cinnamon Cake:size=13}Total: ${color5}${cpu}${color} % ${goto 100}Temp in C: ${color5}${acpitemp}${color}
+Cpu 1: ${color5}${cpu cpu1}${color} % ${goto 150}Cpu 5: ${color5}${cpu cpu5}${color} %
+Cpu 2: ${color5}${cpu cpu2}${color} % ${goto 150}Cpu 6: ${color5}${cpu cpu6}${color} %
+Cpu 3: ${color5}${cpu cpu3}${color} % ${goto 150}Cpu 7: ${color5}${cpu cpu7}${color} %
+Cpu 4: ${color5}${cpu cpu4}${color} % ${goto 150}Cpu 8: ${color5}${cpu cpu8}${color} %${font} 
+ 
+${alignc}${font Jellyka CuttyCupcakes:size=30}Disk${font}
+${font Cinnamon Cake:size=13}
+Root: ${color5}${fs_used /}${color} / ${color5}${fs_size /}${color} - ${color5}${voffset 2}${fs_bar 6 /}${color}
+Data: ${color5}${fs_used /DatiFra}${color} / ${color5}${fs_size /DatiFra}${color} - ${color5}${voffset 2}${fs_bar 6 /DatiFra}${color}
+Read:${tab}${tab}${color5}${diskio_read}${color} ${goto 150}Write:${color5}${diskio_write}${color} ${font}
+
+${alignc}${font Jellyka CuttyCupcakes:size=30}Networking${font}
+${if_up wlan0}${font Cinnamon Cake:size=13}WiFi:
+${tab}Essid: ${color5}${wireless_essid wlan0}${color}
+${tab}Strength: ${color5}${wireless_link_qual_perc wlan0} %${color}
+${tab}Download: ${color5}${downspeed wlan0}${color}
+${tab}Upload: ${color5}${upspeed wlan0}${color}${endif}
+
+${if_up eth0}Wired:
+${tab}${tab}Download: ${color5}${downspeed eth0}${color}${alignr}Upload: ${color5}${upspeed eth0}${color}
+${tab}${tab}Public IP:${alignr}${color5}${execi 3600 wget -q -O /dev/stdout http://checkip.dyndns.org/ | cut -d : -f 2- | cut -d \< -f -1 | sed 's/^ *//g'}${color}
+${tab}${tab}Local IP:${alignr}${color5}${addr eth0}${color}${endif}
+${if_up wlan0}${else}${if_up eth0}${else}${voffset -20}${color7}Network Unavailable!${tab}${tab}:(${color}${voffset 20}${endif}${endif}
+
+
+
